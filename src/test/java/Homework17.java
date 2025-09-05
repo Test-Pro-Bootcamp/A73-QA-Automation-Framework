@@ -14,55 +14,42 @@ import java.time.Duration;
 public class Homework17 extends BaseTest {
 
     @Test
-    public void AddSongToPlaylist() throws InterruptedException {
-        driver.get("https://qa.koel.app/");
         String expectedSongAddedMessage = "Added 1 song into \"Test Pro Playlist.\"";
 
-        Thread.sleep(2000);
         provideEmail("julia.munoz@testpro.io");
         providePassword("Ltdan25!");
         clickOnLoginBtn();
-        Thread.sleep(2000);
 
         searchSong("Dark Days");
         clickViewAllBtn();
-        Thread.sleep(3000);
         selectFirstSong();
         clickAddBtn();
-        Thread.sleep(1000);
         choosePlaylist();
-        Thread.sleep(2000);
         getAddToPlaylistSuccessMsg();
         System.out.println(getAddToPlaylistSuccessMsg());
-        Thread.sleep(2000);
 
         Assert.assertEquals(getAddToPlaylistSuccessMsg(), expectedSongAddedMessage);
 
     }
 
     private String getAddToPlaylistSuccessMsg() {
-        WebElement notifMessage = driver.findElement(By.xpath("//div[contains(@class, 'success') and contains(@class, 'show')]"));
         return notifMessage.getText();
     }
 
     private void choosePlaylist() {
-        WebElement playListBtn = driver.findElement(By.xpath("//section[@id='songResultsWrapper']//li[contains(text(), 'Test Pro Playlist')]"));
         playListBtn.click();
     }
 
     private void clickAddBtn() {
-        WebElement addToBtn = driver.findElement(By.xpath("//button[@data-test='add-to-btn']"));
         addToBtn.click();
     }
 
     private void selectFirstSong()  {
-        WebElement firstSong = driver.findElement(By.xpath("//*[@id='songResultsWrapper']/div/div/div[1]/table/tr[1]/td[2]"));
         firstSong.click();
     }
 
 
     private void clickViewAllBtn() {
-       WebElement viewAllBtn =driver.findElement(By.xpath("//button[@data-test='view-all-songs-btn']"));
        viewAllBtn.click();
 
     }
