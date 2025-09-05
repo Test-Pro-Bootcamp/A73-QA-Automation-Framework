@@ -14,43 +14,67 @@ import java.time.Duration;
 public class Homework17 extends BaseTest {
 
     @Test
+    public void addSongToPlaylist()  {
+        driver.get(url);
+
         String expectedSongAddedMessage = "Added 1 song into \"Test Pro Playlist.\"";
 
         provideEmail("julia.munoz@testpro.io");
         providePassword("Ltdan25!");
         clickOnLoginBtn();
 
+
         searchSong("Dark Days");
         clickViewAllBtn();
+
         selectFirstSong();
         clickAddBtn();
+
         choosePlaylist();
+
         getAddToPlaylistSuccessMsg();
         System.out.println(getAddToPlaylistSuccessMsg());
+
 
         Assert.assertEquals(getAddToPlaylistSuccessMsg(), expectedSongAddedMessage);
 
     }
 
     private String getAddToPlaylistSuccessMsg() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+
+        WebElement notifMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath("//div[contains(@class, 'success') and contains(@class, 'show')]")));
         return notifMessage.getText();
     }
 
     private void choosePlaylist() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        WebElement playListBtn = wait.until(ExpectedConditions.elementToBeClickable(
+                By.xpath("//section[@id='songResultsWrapper']//li[contains(text(), 'Test Pro Playlist')]")));
         playListBtn.click();
     }
 
     private void clickAddBtn() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        WebElement addToBtn = wait.until(ExpectedConditions.elementToBeClickable(
+                By.xpath("//button[@data-test='add-to-btn']")));
         addToBtn.click();
     }
 
     private void selectFirstSong()  {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        WebElement firstSong = wait.until(ExpectedConditions.elementToBeClickable(
+                By.xpath("//*[@id='songResultsWrapper']/div/div/div[1]/table/tr[1]/td[2]")));
         firstSong.click();
     }
 
 
     private void clickViewAllBtn() {
-       viewAllBtn.click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        WebElement viewAllBtn = wait.until(ExpectedConditions.elementToBeClickable(
+                By.xpath("//button[@data-test='view-all-songs-btn']")));
+        viewAllBtn.click();
 
     }
 
