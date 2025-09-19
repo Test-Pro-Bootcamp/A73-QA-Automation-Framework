@@ -1,15 +1,13 @@
 package POM;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.devtools.v104.page.Page;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class Loginpage extends Basepage{
+public class LoginPage extends Basepage{
     //Constructor initializes POM elements
-    public Loginpage(WebDriver givenDriver) {
+    public LoginPage(WebDriver givenDriver) {
         super(givenDriver); //navigates to BasePage
         PageFactory.initElements(givenDriver, this);
     }
@@ -37,7 +35,7 @@ public class Loginpage extends Basepage{
         submitBtn.click();
     }
 
-    public Loginpage login(String email, String password) {
+    public LoginPage login(String email, String password) {
         provideEmail(email);
         providePassword(password);
         submitBtn();

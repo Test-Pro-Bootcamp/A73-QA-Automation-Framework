@@ -16,15 +16,20 @@ import org.testng.annotations.Parameters;
 
 import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URL;
 import java.rmi.Remote;
 import java.time.Duration;
+import java.util.HashMap;
 
 public class BaseTest {
     public static WebDriver driver = null;
+    public static Actions actions = null;
+    public static WebDriver wait = null;
+    public static String = null;
 
     private static final ThreadLocal<WebDriver> threadDriver = new ThreadLocal<>();
-    private WebDriverWait wait;
-    private Actions actions;
+
+
     private String url;
 
     @BeforeSuite
@@ -80,7 +85,24 @@ public class BaseTest {
         return threadDriver.get();
     }
 
-    public static WebDriver pickBrowser(String browser) throws MalformedURLException {
+    public WebDriver lambdatest(){
+        String hubURL="https://hub.lambdatest.com/wb/hub";
+
+        ChromeOptions browserOptions = new ChromeOptions();
+        browserOptions.setPlatformName("Windows 10");
+        browserOptions.setBrowserVersion("dev");
+        HashMap<String, Object> ltOptions = new HashMap<String, Object>();
+        ltOptions.put("username", "Your LambdaTest Username");
+        ltOptions.put("accessKey", "Your LambdaTest Access Key");
+        ltOptions.put("project", "Untitled");
+        ltOptions.put("w3c", true);
+        ltOptions.put("plugin", "java-java");
+        browserOptions.setCapability("LT:Options", ltOptions);
+
+        return new RemoteWebDriver(new URL(hubURL),browserOptions);
+    }
+
+    public WebDriver pickBrowser(String browser) throws MalformedURLException {
         DesiredCapabilities caps = new DesiredCapabilities();
         String gridURL = "http://192.168.1.232:4444/wd/hub";
 
@@ -88,20 +110,28 @@ public class BaseTest {
             case "firefox":
                 WebDriverManager.firefoxdriver().setup();
                 return driver= new FirefoxDriver();
+
             case "MicrosoftEdge":
                 WebDriverManager.edgedriver().setup();
                 EdgeOptions edgeoptions = new EdgeOptions();
                 edgeoptions.addArguments("--remote-allow-origins=*");
                 return driver = new EdgeDriver(edgeoptions);
-            case "grid-edge":
+
+            case "grid-edge": //gradle clean test -Dbrowser=grid-edge
                 caps.setCapability("browserName", "MicrosoftEdge");
                 return driver = new RemoteWebDriver(URI.create(gridURL).toURL(),caps);
+
             case "grid-firefox":
                 caps.setCapability("browserName", "firefox");
                 return driver = new RemoteWebDriver(URI.create(gridURL).toURL(),caps);
+
             case "grid-chrome":
                 caps.setCapability("browserName", "chrome");
                 return driver = new RemoteWebDriver(URI.create(gridURL).toURL(),caps);
+
+            case "cloud":
+                return lambdatest();
+
             default:
                 WebDriverManager.chromedriver().setup();
                 ChromeOptions options = new ChromeOptions();

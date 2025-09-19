@@ -1,3 +1,5 @@
+import POM.HomePage;
+import POM.LoginPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -15,62 +17,24 @@ public class LoginTests extends BaseTest {
     public static WebDriver driver = null;
 
     @Test
-    public void loginEmptyEmailPassword() throws InterruptedException {
+    public void loginValidEmailPassword() {
 
-            navigateToPage(url);
-            provideEmail("julia.munoz@testpro.io");
-            providePassword("Ltdan25!");
-            clickOnLoginBtn();
+        LoginPage loginPage = new LoginPage(getDriver());
+        HomePage homePage = new HomePage(getDriver());
 
-//      Added ChromeOptions argument below to fix websocket error
-            ChromeOptions options = new ChromeOptions();
-            options.addArguments("--remote-allow-origins=*");
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            wait.until(ExpectedConditions.urlContains("https://qa.koel.app/"));
+        loginPage.provideEmail("juliamunoz@testpro.io").providePassword("Ltdan25!").clickSubmit();
 
-            Assert.assertTrue(driver.getCurrentUrl().contains("https://qa.koel.app/"), "URL after login is incorrect");
-
-            WebDriver driver = new ChromeDriver(options);
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
-            String url = "https://testpro.io/";
-            driver.get(url);
-            Assert.assertEquals(driver.getCurrentUrl(), url);
-            //String url = "https://testpro.io/";
-            //driver.get(url);
-            //Assert.assertEquals(driver.getCurrentUrl(), url);
-            driver.quit();
-        }
+        Assert.assertTrue(homePage.isAvatarDisplayed());
     }
 
+    @Test
+    public void loginEmptyEmailPassword()throws InterruptedException {
 
+        LoginPage loginPage = new LoginPage(getDriver());
 
-    private void clickOnLoginBtn () {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@type='submit']")));
-        loginButton.click();
+        loginPage.provideEmail("").providePassword("Ltdan25!").clickSubmit();
+
+        Thread.sleep(2000);
+        Assert.assertEquals(getDriver().getCurrentUrl(), url);
     }
-
-
-    private void providePassword (String password){
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement passwordField = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@type='password']")));
-        passwordField.clear();
-        passwordField.sendKeys(password);
-
-    }
-
-    private void provideEmail (String email){
-     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-     WebElement emailField = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@type='email']")));
-     emailField.clear();
-     emailField.sendKeys(email);
-    }
-
-    public void navigateToPage (String url){
-        driver.get(url);
-    }
-
-
-    public void main() {
-    }
+}

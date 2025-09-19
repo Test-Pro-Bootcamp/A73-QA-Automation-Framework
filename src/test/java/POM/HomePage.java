@@ -1,17 +1,16 @@
 package POM;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class Homepage extends Basepage {
+public class HomePage extends Basepage {
 
     WebDriver driver;
 
-    public Homepage (WebDriver givenDriver) {
+    public HomePage(WebDriver givenDriver) {
         super(givenDriver);
         this.driver = givenDriver;
         PageFactory.initElements(driver, this);

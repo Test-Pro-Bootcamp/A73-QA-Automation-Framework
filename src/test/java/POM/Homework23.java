@@ -14,8 +14,8 @@ public class Homework23 extends BaseTest {
         String expectedRenameMessage = "Updated playlist \"" + "Gym" + "\"";
 
         // Initialize POM pages
-        Loginpage loginPage = new Loginpage(driver);
-        Homepage homepage = new Homepage(driver);
+        LoginPage loginPage = new LoginPage(driver);
+        HomePage homepage = new HomePage(driver);
 
         //Login
         loginPage.login("julia.munoz@testpro.io", "Ltdan25!");
