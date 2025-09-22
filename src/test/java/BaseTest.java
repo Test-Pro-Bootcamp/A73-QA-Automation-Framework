@@ -31,7 +31,7 @@ public class BaseTest {
     static void setupClass() {
 
         WebDriverManager.chromedriver().setup();
-    }w
+    }
 
     @BeforeMethod
     @Parameters({"BaseURL"})
