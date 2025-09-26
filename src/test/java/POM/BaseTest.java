@@ -1,3 +1,5 @@
+package POM;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -16,7 +18,6 @@ import org.testng.annotations.Parameters;
 
 import java.net.MalformedURLException;
 import java.net.URI;
-import java.rmi.Remote;
 import java.time.Duration;
 
 public class BaseTest {
@@ -25,13 +26,13 @@ public class BaseTest {
     private static final ThreadLocal<WebDriver> threadDriver = new ThreadLocal<>();
     private WebDriverWait wait;
     private Actions actions;
-    private String url;
+    protected String url;
 
     @BeforeSuite
     static void setupClass() {
 
         WebDriverManager.chromedriver().setup();
-    }w
+    }
 
     @BeforeMethod
     @Parameters({"BaseURL"})

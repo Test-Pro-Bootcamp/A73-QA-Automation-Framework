@@ -1,13 +1,11 @@
-package POM;
+package pagefactory;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.devtools.v104.page.Page;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class Loginpage extends Basepage{
+public class Loginpage extends Basepage {
     //Constructor initializes POM elements
     public Loginpage(WebDriver givenDriver) {
         super(givenDriver); //navigates to BasePage
