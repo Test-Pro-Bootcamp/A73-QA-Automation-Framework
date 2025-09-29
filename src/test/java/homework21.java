@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 
 import java.time.Duration;
 
-public class Homeworkk21 extends BaseTest {
+public class homework21 extends BaseTest {
     public static Actions actions = null;
     String newPlayListName = "Gym";
 
